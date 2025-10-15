@@ -1,0 +1,52 @@
+# A YAML representation of the fullPaperData dictionary
+
+# 1. Core paper details
+paper:
+  title: "This is a long paper title"
+  publication: "Conference Name"
+  abbr: "Conf."
+  date:
+    year: 2025
+    month: December
+
+# 2. Author list
+authors:
+  - name: "Author 1"
+    affiliation: "University of Tech, Dept. of Science"
+    link: "https://www.jiarui-li.com/"
+  - name: "Author 2"
+    affiliation: "Research Lab, Innovation City"
+  - name: "Author 3"
+    affiliation: "University of Tech, Dept. of Science"
+    corresponding: true
+
+# 3. External links and resources
+links:
+  - name: "Main Paper"
+    link: "#"
+    icon: "fa-solid fa-file-lines"
+    expand: true
+  - name: "Supplementary"
+    link: "#"
+    icon: "fa-solid fa-file-lines"
+  - name: "Code"
+    link: "#"
+    icon: "fa-solid fa-code"
+
+# 4. Citation formats (using the pipe '|' for multi-line strings)
+citations:
+  Bibtex: |
+    @InProceedings{example2025,
+      author = {John Doe},
+      title = {An Example Paper},
+      year = {2025},
+      booktitle = {Conference XYZ}
+    }
+  APA: "Doe, J. (2025). An Example Paper. In Conference XYZ."
+  Chicago: "Doe, John. \"An Example Paper.\" In Conference XYZ, 2025."
+
+# 5. Path to the main document file
+document:
+  path: "./README.pmd"
+  centered: true
+  footer: "<a href='#'>author</a> 2025 &copy; CC by 4.0"
