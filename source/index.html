@@ -461,7 +461,7 @@ layout: false
             `;
             // Update other elements directly
             document.getElementById("Nav-Publication-Name-Container").textContent = `${paperData.abbr} ${paperData.date.year}`;
-            document.title = `[${paperData.abbr}] ${paperData.title}`;
+            // document.title = `[${paperData.abbr}] ${paperData.title}`;
         }
 
         function renderLinkButtons(links, containerId, size="is-small", ignoreExpand=false) {
@@ -698,6 +698,14 @@ layout: false
             
         };
 
+        function renderPageMeta(paperData) {
+            if (paperData.page && paperData.page.title) {
+                document.title = paperData.page.title;
+            } else {
+                document.title = `[${paperData.paper.abbr}] ${paperData.paper.title}`;
+            }
+        };
+
         // --- Initialization Function ---
 
         async function initPaperPage(paperData) {
@@ -709,6 +717,7 @@ layout: false
 
             renderHeader(paperData.paper, 'paper-title-container');
             renderAuthors(paperData.authors);
+            renderPageMeta(paperData);
             // Render buttons for both header and navbar
             renderNavLinkButtons(paperData.links, "link-buttons-container", "is-small", true);
             renderLinkButtons(paperData.links, "link-buttons-header-container", "");
