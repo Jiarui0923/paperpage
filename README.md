@@ -15,9 +15,15 @@ Simply provide a configuration file, and Paper Page takes care of the rest.
 - Customizable through a simple config file  
 - Responsive design — supports both desktop and mobile devices  
 
+## Updates
+- Support title customization (Contributed by Zach)
+
 
 
 👤 Maintained by [**Jiarui Li**](http://jiarui.li)
+
+Contributors:
+- [**Zach**](https://zachyin.com)
 
 
 

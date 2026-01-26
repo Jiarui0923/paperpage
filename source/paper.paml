@@ -50,3 +50,7 @@ document:
   path: "./README.pmd"
   centered: true
   footer: "<a href='#'>author</a> 2025 &copy; CC by 4.0"
+
+# 6. Page Define
+page:
+  title: "This is a short title"
