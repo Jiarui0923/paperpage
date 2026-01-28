@@ -10,6 +10,11 @@ layout: false
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>🔬</text></svg>">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text:ital@0;1&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono&display=swap" rel="stylesheet">
+
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked"></script>
@@ -18,6 +23,26 @@ layout: false
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     
     <style>
+        :root {
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-dserif: 'DM Serif Text', serif;
+            --hero-bg-color: #f5f5f5; /* light gray */
+            --hero-text-color: #222;  /* almost black */
+        }
+
+        h1, h2, h3, h4 { font-family: var(--font-dserif); }
+        body {
+            font-family: var(--font-sans);
+        }
+
+        .is-dmserif {
+            font-family: var(--font-dserif);
+        }
+
+        .is-mono {
+            font-family: var(--font-mono);
+        }
         /* CSS is generally kept the same as it's small and well-structured */
         .hover-expand .text {
             opacity: 0;
@@ -139,14 +164,20 @@ layout: false
             max-width: 100%;             /* Don’t exceed parent’s width */
             box-sizing: border-box;      /* Include padding in total width */
         }
+
+        .hero-bordered {
+            border-top: 2px solid #ccc;   /* top rule */
+            border-bottom: 2px solid #ccc; /* bottom rule */
+        }
+
     </style>
 </head>
-<body class="is-family-sans-serif">
+<body>
     <div class="navbar-container">
         <nav class="navbar custom-frosted-navbar" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
                 <div class="navbar-item">
-                    <p class="is-size-5 has-text-weight-bold" id="Nav-Publication-Name-Container">Conference</p>
+                    <h1 class="is-size-5 has-text-weight-bold" id="Nav-Publication-Name-Container">Conference</h1>
                 </div>
 
                 <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" href="#cite">
@@ -169,13 +200,31 @@ layout: false
         </nav>
     </div>
 
-    <section class="hero is-bold is-halfheight mt-6">
+    <div class="hero is-small">
+        <nav class="hero-body">
+            <article class="media">
+                <span id="top-nav-icon">
+                   
+                </span>
+                
+                <div class="media-content is-hidden-mobile">
+                    <h1 class="subtitle" id="top-nav-title">Conference</h1>
+                </div>
+                <div class="media-content is-hidden-tablet">
+                    <h1 class="subtitle" id="top-nav-title-abbr">Conference</h1>
+                </div>
+                
+                </article>
+        </nav>
+    </div>
+
+    <section class="hero is-bold is-halfheight mt-0">
         <div class="hero-body">
-            <div class="container has-text-centered" id="header-title">
+            <div class="container has-text-left" id="header-title">
                 <div class="content">
                     <span id="paper-title-container"></span> 
-                    <p id="author-list-container"></p>
-                    <p id="affiliation-explanation-container"></p>
+                    <p id="author-list-container" class="is-dmserif mb-0"></p>
+                    <p id="affiliation-explanation-container" class="is-dmserif"></p>
                     <p id="link-buttons-header-container"></p>
                 </div>
             </div>
@@ -196,7 +245,7 @@ layout: false
                     <div class="tabs mb-0" id="citation-tabs">
                         <ul></ul>
                     </div>
-                    <pre id="citation-content"></pre>
+                    <pre id="citation-content" class="is-mono"></pre>
                 </div>
                 <div class="cell has-text-centered is-flex is-justify-content-center is-align-items-center">
                     <div id="share-col"></div>
@@ -209,7 +258,7 @@ layout: false
         <div class="content has-text-centered">
             <p id="footer-note-container"></p>
             <p>
-                Template created by <a href="http://jiarui.li">Jiarui Li</a>.
+                Build <a href="https://github.com/Jiarui0923/paperpage">PaperPage</a> for your paper.
             </p>
             <a id="theme-toggle" class="button">
                 <span class="icon">
@@ -453,16 +502,27 @@ layout: false
 
             // Use innerHTML for the main header block
             container.innerHTML = `
-                <h1 class="title">${paperData.title}</h1>
-                <p class="subtitle">
-                    ${paperData.publication}<br>
-                    (${paperData.date.year} ${paperData.date.month})
-                </p>
-                <br>
+                <h4 class="subtitle" style="font-weight: 400; color: #555;">
+                    ${paperData.date.year} ${paperData.date.month}
+                </h4>
+                <h1 class="title mt-0">${paperData.title}</h1>
             `;
             // Update other elements directly
             document.getElementById("Nav-Publication-Name-Container").textContent = `${paperData.abbr} ${paperData.date.year}`;
-            // document.title = `[${paperData.abbr}] ${paperData.title}`;
+            document.getElementById("top-nav-title").innerHTML = `${paperData.publication}`;
+            document.getElementById("top-nav-title-abbr").innerHTML = `${paperData.abbr}`;
+            
+            if (paperData.pubicon) {
+                document.getElementById("top-nav-icon").innerHTML = `
+                <figure class="media-left">
+                    <div class="logo-container" style="height:21pt;">
+                        <img src="${paperData.pubicon}" style="max-width: auto;height: 100%;display: block;">
+                    </div>
+                </figure>
+                `
+            }
+            
+            document.title = `[${paperData.abbr}] ${paperData.title}`;
         }
 
         function renderLinkButtons(links, containerId, size="is-small", ignoreExpand=false) {
@@ -473,7 +533,7 @@ layout: false
             }
 
             // Build all HTML once, then inject
-            let buttonsHtml = '<div class="buttons has-addons is-centered">';
+            let buttonsHtml = '<div class="buttons has-addons is-dmserif">';
 
             links.forEach(link => {
                 const iconHtml = `<span class="icon" style="margin-right: -5pt;"><i class="${link.icon}"></i></span>`;
@@ -484,7 +544,7 @@ layout: false
                 
                 
                 buttonsHtml += `
-                    <a class="button is-rounded frosted-button ${expand_tag} ${size}" href="${link.link}">
+                    <a class="button is-small is-rounded frosted-button ${expand_tag} ${size}" href="${link.link}">
                         ${iconHtml}
                         ${textHtml}
                     </a>
@@ -495,7 +555,7 @@ layout: false
             // const expand_tag = !ignoreExpand ? '' : 'hover-expand';
             const expand_tag = 'hover-expand';
             buttonsHtml += `
-                <a class="button is-rounded frosted-button ${expand_tag} is-link is-outlined ${size}" href="#cite">
+                <a class="button is-small is-rounded frosted-button ${expand_tag} is-link is-outlined ${size}" href="#cite">
                     <span class="icon" style="margin-right: -5pt;"><i class="fa-solid fa-quote-right"></i></span>
                     <span class="text">&nbsp;&nbsp;Cite</span>
                 </a>
@@ -524,7 +584,7 @@ layout: false
                 
                 
                 buttonsHtml += `
-                    <a class="navbar-item ${expand_tag} ${size}" href="${link.link}">
+                    <a class="navbar-item ${expand_tag} ${size} is-dmserif" href="${link.link}">
                         ${iconHtml}
                         ${textHtml}
                     </a>
@@ -535,7 +595,7 @@ layout: false
             // const expand_tag = !ignoreExpand ? '' : 'hover-expand';
             const expand_tag = 'hover-expand';
             buttonsHtml += `
-                <a class="navbar-item button is-ghost ${expand_tag} is-link is-outlined" href="#cite">
+                <a class="navbar-item button is-ghost ${expand_tag} is-link is-outlined is-dmserif" href="#cite">
                     <span class="icon" style="margin-right: -5pt;"><i class="fa-solid fa-quote-right"></i></span>
                     <span class="text">&nbsp;&nbsp;Cite</span>
                 </a>
@@ -699,14 +759,6 @@ layout: false
             
         };
 
-        function renderPageMeta(paperData) {
-            if (paperData.page && paperData.page.title) {
-                document.title = paperData.page.title;
-            } else {
-                document.title = `[${paperData.paper.abbr}] ${paperData.paper.title}`;
-            }
-        };
-
         // --- Initialization Function ---
 
         async function initPaperPage(paperData) {
@@ -718,7 +770,6 @@ layout: false
 
             renderHeader(paperData.paper, 'paper-title-container');
             renderAuthors(paperData.authors);
-            renderPageMeta(paperData);
             // Render buttons for both header and navbar
             renderNavLinkButtons(paperData.links, "link-buttons-container", "is-small", true);
             renderLinkButtons(paperData.links, "link-buttons-header-container", "");

@@ -8,6 +8,7 @@ paper:
   date:
     year: 2025
     month: December
+  pubicon: "path to publication icon"
 
 # 2. Author list
 authors:
